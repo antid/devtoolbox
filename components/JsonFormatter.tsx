@@ -56,7 +56,7 @@ export function JsonFormatter() {
       
       if (user) {
         // Save to cloud
-        const snippet = await snippetService.saveSnippet({
+        await snippetService.saveSnippet({
           title: 'JSON Snippet',
           content: output,
           type: 'json',

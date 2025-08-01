@@ -538,7 +538,7 @@ export function EnhancedSnippetManager() {
           {!loading && currentSnippets.length > 0 && (
             <div className="space-y-3">
               {currentSnippets.map((snippet) => (
-                <Card key={`${activeTab}-${'id' in snippet ? snippet.id : snippet.id}`} className="border-l-4 border-l-primary/20">
+                <Card key={`${activeTab}-${snippet.id}`} className="border-l-4 border-l-primary/20">
                   <CardContent className="p-4">
                     <div className="flex items-start justify-between mb-2">
                       <div className="flex items-center gap-2">

@@ -27,7 +27,6 @@ export function HashGenerator() {
   const md5 = (str: string): string => {
     const hex = (n: number) => n.toString(16).padStart(2, '0');
     const utf8 = new TextEncoder().encode(str);
-    let h = [0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476];
     
     // This is a simplified implementation - in production, use a proper crypto library
     let hash = '';
