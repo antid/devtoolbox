@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/ui/tabs';
-import { JsonFormatter } from './components/JsonFormatter';
-import { RegexTester } from './components/RegexTester';
-import { UuidGenerator } from './components/UuidGenerator';
-import { Base64Tool } from './components/Base64Tool';
-import { UrlTool } from './components/UrlTool';
-import { HashGenerator } from './components/HashGenerator';
-import { EnhancedSnippetManager } from './components/EnhancedSnippetManager';
-import { SharePage } from './components/SharePage';
-import { Button } from './components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
+import { JsonFormatter } from '../components/JsonFormatter';
+import { RegexTester } from '../components/RegexTester';
+import { UuidGenerator } from '../components/UuidGenerator';
+import { Base64Tool } from '../components/Base64Tool';
+import { UrlTool } from '../components/UrlTool';
+import { HashGenerator } from '../components/HashGenerator';
+import { EnhancedSnippetManager } from '../components/EnhancedSnippetManager';
+import { SharePage } from '../components/SharePage';
+import { Button } from '../components/ui/button';
 import { Code, Hash, Link, Regex, Shuffle, FileText, Bookmark, Wrench, Sun, Moon } from 'lucide-react';
 
 export default function App() {
@@ -149,7 +149,7 @@ export default function App() {
               className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:underline transition-colors ml-1"
             >
               antid.co
-            </a> © 2025
+            </a> 2025
           </p>
         </div>
       </div>
