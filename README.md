@@ -2,8 +2,6 @@
 
 All your essential developer tools in one place. Format, test, generate, and manage with ease.
 
-![DevToolbox Screenshot](https://via.placeholder.com/800x400/3b82f6/ffffff?text=DevToolbox)
-
 ## Features
 
 ### 🔧 Available Tools
@@ -148,7 +146,30 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Alex Martinez**
 - Website: [antid.co](https://antid.co)
-- GitHub: [@yourusername](https://github.com/yourusername)
+- GitHub: [@yourusername](https://github.com/antid)
+
+## ⚙️ Frontend Stack
+
+- **React** – Component-based JavaScript framework you’re migrating your portfolio to.
+- **Tailwind CSS** – Utility-first CSS framework for styling UI quickly without writing custom CSS.
+- **Vercel** – Hosting and deployment platform for static and frontend frameworks (e.g., React, Next.js).
+- **Environment Variables** – Configured via Vercel for securely managing sensitive data like JWT tokens.
+
+---
+
+## 🔐 Security Layer
+
+- **Datadog Code Security** – Static analysis tool scanning your codebase for hardcoded secrets, vulnerabilities, and insecure patterns.
+
+---
+
+## 💡 Optional (inferred or common in similar setups)
+
+- **.env files** – For managing local environment variables during development.
+- **GitHub** – Version control, assumed from previous questions.
+- **ESLint + Prettier** – Possibly for linting and code formatting (common in React/Tailwind projects).
+- **JavaScript / JSX** – Primary language you’re using in the frontend.
+
 
 ## Acknowledgments
 
