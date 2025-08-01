@@ -163,13 +163,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 💡 Optional (inferred or common in similar setups)
-
-- **.env files** – For managing local environment variables during development.
-- **GitHub** – Version control, assumed from previous questions.
-- **ESLint + Prettier** – Possibly for linting and code formatting (common in React/Tailwind projects).
-- **JavaScript / JSX** – Primary language you’re using in the frontend.
-
 
 ## Acknowledgments
 
