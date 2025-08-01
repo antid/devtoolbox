@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Switch } from './ui/switch';
 import { Alert, AlertDescription } from './ui/alert';
-import { Copy, Trash2, Plus, Search, Download, Upload, Share, Cloud, HardDrive, User, LogIn, LogOut } from 'lucide-react';
+import { Copy, Trash2, Plus, Search, Share, Cloud, HardDrive, User, LogIn, LogOut } from 'lucide-react';
 import { toast } from 'sonner';
 import { authService, type AuthState } from '../services/authService';
 import { snippetService, type CloudSnippet } from '../services/snippetService';
