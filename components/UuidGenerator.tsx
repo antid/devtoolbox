@@ -5,7 +5,7 @@ import { Textarea } from './ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Copy, RefreshCw, Upload, Shuffle, Settings, Info, Hash } from 'lucide-react';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 export function UuidGenerator() {
   const [version, setVersion] = useState('4');

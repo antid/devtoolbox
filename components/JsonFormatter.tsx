@@ -4,7 +4,7 @@ import { Textarea } from './ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Alert, AlertDescription } from './ui/alert';
 import { Copy, Download, Upload, Cloud, HardDrive, FileText, Settings, Play, Minimize2 } from 'lucide-react';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import { authService } from '../services/authService';
 import { snippetService } from '../services/snippetService';
 

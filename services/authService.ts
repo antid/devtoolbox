@@ -1,4 +1,5 @@
 import { supabase } from '../utils/supabase/client'
+import { publicAnonKey } from '../utils/supabase/info'
 
 export interface User {
   id: string
