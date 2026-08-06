@@ -49,7 +49,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.0",
     "react-resizable-panels": "^0.0.55",
-    "recharts": "^2.8.0",
+    "recharts": "^3.0.0",
     "sonner": "^2.0.3",
     "tailwind-merge": "^1.14.0",
     "vaul": "^0.9.0"
@@ -62,13 +62,13 @@
     "@typescript-eslint/parser": "^7.6.0",
     "@vitejs/plugin-react": "^4.0.3",
     "autoprefixer": "^10.4.24",
-    "eslint": "^9.0.0",
+    "eslint": "^9.1.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
-    "postcss": "^8.5.10",
+    "postcss": "^8.5.12",
     "tailwindcss": "^3.4.19",
     "typescript": "^5.0.2",
-    "vite": "^5.4.20"
+    "vite": "^5.4.21"
   },
   "keywords": [
     "developer-tools",
