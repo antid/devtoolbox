@@ -104,9 +104,33 @@ export function RegexTester() {
     });
   }, [flags.g, flags.i, pattern, testString]);
 
-  const highlightedText = useMemo(() => {
-    if (!matches.length || !testString) return [testString];
-    return buildHighlightedContent(testString, matches);
+  const highlightedSegments = useMemo<Array<{ text: string; highlighted: boolean }>>(() => {
+    if (!matches.length || !testString) {
+      return [{ text: testString, highlighted: false }];
+    }
+
+    const segments: Array<{ text: string; highlighted: boolean }> = [];
+    let lastIndex = 0;
+
+    matches.forEach((match) => {
+      if (match.index !== undefined) {
+        const start = match.index;
+        const end = start + match[0].length;
+
+        if (start > lastIndex) {
+          segments.push({ text: testString.slice(lastIndex, start), highlighted: false });
+        }
+
+        segments.push({ text: testString.slice(start, end), highlighted: true });
+        lastIndex = end;
+      }
+    });
+
+    if (lastIndex < testString.length) {
+      segments.push({ text: testString.slice(lastIndex), highlighted: false });
+    }
+
+    return segments.length ? segments : [{ text: testString, highlighted: false }];
   }, [matches, testString]);
 
   const replacedText = useMemo(() => {
@@ -303,7 +327,18 @@ export function RegexTester() {
                 <div 
                   className="p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg whitespace-pre-wrap font-mono text-sm leading-relaxed"
                 >
-                  {highlightedText}
+                  {highlightedSegments.map((segment, index) => (
+                    segment.highlighted ? (
+                      <mark
+                        key={index}
+                        className="bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100 px-1 rounded"
+                      >
+                        {segment.text}
+                      </mark>
+                    ) : (
+                      <span key={index}>{segment.text}</span>
+                    )
+                  ))}
                 </div>
               </CardContent>
             </Card>
