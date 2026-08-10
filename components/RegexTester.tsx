@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, type ReactNode } from 'react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
@@ -8,29 +8,101 @@ import { Checkbox } from './ui/checkbox';
 import { Copy, Upload, Regex, Search, CheckCircle, XCircle, Settings } from 'lucide-react';
 import { toast } from 'sonner';
 
+type LiteralMatch = {
+  value: string;
+  index: number;
+};
+
+const findLiteralIndex = (source: string, needle: string, startIndex: number, ignoreCase: boolean) => {
+  if (!ignoreCase) {
+    return source.indexOf(needle, startIndex);
+  }
+
+  const normalizedNeedle = needle.toLocaleLowerCase();
+
+  for (let index = startIndex; index <= source.length - needle.length; index += 1) {
+    if (source.slice(index, index + needle.length).toLocaleLowerCase() === normalizedNeedle) {
+      return index;
+    }
+  }
+
+  return -1;
+};
+
+const findLiteralMatches = (
+  source: string,
+  needle: string,
+  options: { global: boolean; ignoreCase: boolean },
+): LiteralMatch[] => {
+  if (!source || !needle) return [];
+
+  const matches: LiteralMatch[] = [];
+  let searchIndex = 0;
+
+  while (searchIndex <= source.length - needle.length) {
+    const index = findLiteralIndex(source, needle, searchIndex, options.ignoreCase);
+    if (index === -1) break;
+
+    matches.push({
+      value: source.slice(index, index + needle.length),
+      index,
+    });
+
+    if (!options.global) break;
+    searchIndex = index + needle.length;
+  }
+
+  return matches;
+};
+
+const buildHighlightedContent = (source: string, matches: LiteralMatch[]): ReactNode[] => {
+  const content: ReactNode[] = [];
+  let cursor = 0;
+
+  matches.forEach((match, matchIndex) => {
+    const end = match.index + match.value.length;
+
+    content.push(source.slice(cursor, match.index));
+    content.push(
+      <mark
+        key={`${match.index}-${matchIndex}`}
+        className="bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100 px-1 rounded"
+      >
+        {source.slice(match.index, end)}
+      </mark>,
+    );
+    cursor = end;
+  });
+
+  content.push(source.slice(cursor));
+  return content;
+};
+
+const replaceLiteralMatches = (source: string, matches: LiteralMatch[], replacement: string) => {
+  let replaced = '';
+  let cursor = 0;
+
+  matches.forEach((match) => {
+    replaced += source.slice(cursor, match.index);
+    replaced += replacement;
+    cursor = match.index + match.value.length;
+  });
+
+  return replaced + source.slice(cursor);
+};
+
 export function RegexTester() {
   const [pattern, setPattern] = useState('');
   const [flags, setFlags] = useState({ g: true, i: false, m: false });
   const [testString, setTestString] = useState('');
   const [replacement, setReplacement] = useState('');
 
-  const regex = useMemo(() => {
-    if (!pattern) return null;
-    try {
-      const flagString = Object.entries(flags)
-        .filter(([_, enabled]) => enabled)
-        .map(([flag]) => flag)
-        .join('');
-      return new RegExp(pattern, flagString);
-    } catch {
-      return null;
-    }
-  }, [pattern, flags]);
-
   const matches = useMemo(() => {
-    if (!regex || !testString) return [];
-    return Array.from(testString.matchAll(regex));
-  }, [regex, testString]);
+    return findLiteralMatches(testString, pattern, {
+      global: flags.g,
+      ignoreCase: flags.i,
+    });
+  }, [flags.g, flags.i, pattern, testString]);
 
   const highlightedSegments = useMemo<Array<{ text: string; highlighted: boolean }>>(() => {
     if (!matches.length || !testString) {
@@ -62,13 +134,9 @@ export function RegexTester() {
   }, [matches, testString]);
 
   const replacedText = useMemo(() => {
-    if (!regex || !testString || !replacement) return '';
-    try {
-      return testString.replace(regex, replacement);
-    } catch {
-      return '';
-    }
-  }, [regex, testString, replacement]);
+    if (!matches.length || !replacement) return '';
+    return replaceLiteralMatches(testString, matches, replacement);
+  }, [matches, replacement, testString]);
 
   const copyToClipboard = async (text: string) => {
     await navigator.clipboard.writeText(text);
@@ -97,7 +165,7 @@ export function RegexTester() {
     setFlags({ g: true, i: true, m: false });
   };
 
-  const isValidPattern = pattern && regex;
+  const isValidPattern = pattern.length > 0;
 
   return (
     <div className="space-y-6">
@@ -144,11 +212,6 @@ export function RegexTester() {
                     )}
                   </div>
                 </div>
-                {pattern && !regex && (
-                  <p className="text-sm text-red-600 dark:text-red-400 mt-1">
-                    Invalid regular expression
-                  </p>
-                )}
               </div>
 
               <div>
@@ -216,7 +279,7 @@ export function RegexTester() {
                       <div key={index} className="p-2 bg-gray-50 dark:bg-gray-800 rounded text-sm font-mono">
                         <span className="text-gray-600 dark:text-gray-400">Match {index + 1}:</span>
                         <br />
-                        <span className="text-blue-600 dark:text-blue-400">{match[0]}</span>
+                        <span className="text-blue-600 dark:text-blue-400">{match.value}</span>
                       </div>
                     ))}
                     {matches.length > 5 && (
